@@ -14,6 +14,8 @@ var MONTHS = ["JAN","FEB", "MAR", "APR",
               "MAY", "JUN", "JUL", "AUG", 
               "SEPT", "OCT", "NOV", "DEC"];
 
+var BG_COLOR = ["#ccc", "#fff"];
+
 //Times in millis
 var ONE_DAY= 86400000;
 var ONE_WEEK = ONE_DAY * 7;
@@ -38,7 +40,7 @@ function renderWeekAround(someDate) {
   for(var i = 0; i < 7; i++) {
     var difference = i - currentDayOfWeek;
     var anotherDay = calculateDay(someDate, difference);
-    week[i] = MONTHS[anotherDay.getMonth()] + " " + anotherDay.getDate();
+    week[i] = anotherDay; 
   }
   return generateWeekAsHtmlRow(week);
 }
@@ -46,17 +48,17 @@ function renderWeekAround(someDate) {
 //Calculate what day it is based on "someDate" + "offsetInDays")
 //eg if someDate is Oct 1, what's the date for 4 days ago (offsetInDays = -4)?
 function calculateDay(someDate, offsetInDays) {
-  var offsetInMillis = Math.abs(offsetInDays) * ONE_DAY;
-  if(offsetInDays < 0) {
-    return new Date(someDate.getTime() - offsetInMillis);
-  }
+  var offsetInMillis = offsetInDays * ONE_DAY;
   return new Date(someDate.getTime() + offsetInMillis);
 }
 
 function generateWeekAsHtmlRow(weekArray){
   var html = "<tr>";
   for(var i = 0; i < 7; i++) {
-    html += "<td>" + weekArray[i] + "</td>";
+    var date = weekArray[i];
+    html += "<td style=\"background-color:" + BG_COLOR[date.getMonth() % 2] + "\">";
+    html += MONTHS[date.getMonth()] + " " + date.getDate();
+    html += "</td>";
   }
   return html;
 }
