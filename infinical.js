@@ -19,6 +19,9 @@ var ONE_WEEK = ONE_DAY * 7;
 //Global state to know how many weeks we've rendered already
 var WEEK_OFFSET = 0;
 
+//How many weeks to render during each infinite scroll action
+var NUM_WEEKS_TO_RENDER;
+
 function renderFutureWeek(numWeeksAhead) {
   var now = new Date();
   var someWeeksFromNow = new Date(now.getTime() + (ONE_WEEK * numWeeksAhead));
@@ -63,13 +66,6 @@ function renderWeekAsHtml(weekArray){
   return html;
 }
 
-$(function() {
-var now = new Date();
-$("#calendar").append(renderWeekAround(now));
-renderMoreWeeks(4);
-});
-
-
 function renderMoreWeeks(numWeeks) {
   for(var i = 0; i < numWeeks; i++) {
     $("#calendar").append(renderFutureWeek(WEEK_OFFSET));
@@ -77,9 +73,17 @@ function renderMoreWeeks(numWeeks) {
   }
 }
 
+$(function() {
+  //Begin by rendering as many cells to fill the current viewport
+  NUM_WEEKS_TO_RENDER = window.innerHeight / 40;
+  console.log("Rendering " + NUM_WEEKS_TO_RENDER + " weeks.");
+  renderMoreWeeks(NUM_WEEKS_TO_RENDER);
+});
+
 $(window).scroll(throttle(function(){
   //Only render while as we approach the bottom
-  if($(document).height() - 200 < $(document).scrollTop() + $(window).height()) {
-    renderMoreWeeks(10);
+  if($(document).height() - 60 < $(document).scrollTop() + $(window).height()) {
+    console.log("appending from 10 weeks from " + WEEK_OFFSET);
+    renderMoreWeeks(NUM_WEEKS_TO_RENDER);
   }
 }, 500 ));	
