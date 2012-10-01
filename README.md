@@ -16,4 +16,4 @@ documents and just continue to scroll? Why does my mother hate me?
 
 ## Demo
 
-You an view a working demo here: http://roflopoly.com/infinical/
+You can view a working demo here: http://roflopoly.com/infinical/
