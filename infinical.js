@@ -10,7 +10,9 @@ function throttle(fn, delay) {
   };
 }
 
-var MONTHS = ["JAN","FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+var MONTHS = ["JAN","FEB", "MAR", "APR", 
+              "MAY", "JUN", "JUL", "AUG", 
+              "SEPT", "OCT", "NOV", "DEC"];
 
 //Times in millis
 var ONE_DAY= 86400000;
@@ -35,17 +37,10 @@ function renderWeekAround(someDate) {
   var week = [];
   for(var i = 0; i < 7; i++) {
     var difference = i - currentDayOfWeek;
-    if(i < currentDayOfWeek) {
-      var pastDate = calculateDay(someDate, difference);
-      week[i] = MONTHS[pastDate.getMonth()] + " " + pastDate.getDate();
-    } else if(currentDayOfWeek == i) {
-      week[i] = MONTHS[currentMonth] + " " + currentDate;
-    } else if (currentDayOfWeek < i){
-      var futureDate = calculateDay(someDate, difference);
-      week[i] = MONTHS[futureDate.getMonth()] + " " + futureDate.getDate();
-    }
+    var anotherDay = calculateDay(someDate, difference);
+    week[i] = MONTHS[anotherDay.getMonth()] + " " + anotherDay.getDate();
   }
-  return renderWeekAsHtml(week);
+  return generateWeekAsHtmlRow(week);
 }
 
 //Calculate what day it is based on "someDate" + "offsetInDays")
@@ -58,7 +53,7 @@ function calculateDay(someDate, offsetInDays) {
   return new Date(someDate.getTime() + offsetInMillis);
 }
 
-function renderWeekAsHtml(weekArray){
+function generateWeekAsHtmlRow(weekArray){
   var html = "<tr>";
   for(var i = 0; i < 7; i++) {
     html += "<td>" + weekArray[i] + "</td>";
