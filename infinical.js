@@ -1,8 +1,23 @@
+// http://remysharp.com/2010/07/21/throttling-function-calls/
+function throttle(fn, delay) {
+  var timer = null;
+  return function () {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
+
 var MONTHS = ["JAN","FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
 
 //Times in millis
 var ONE_DAY= 86400000;
 var ONE_WEEK = ONE_DAY * 7;
+
+//Global state to know how many weeks we've rendered already
+var WEEK_OFFSET = 0;
 
 function renderFutureWeek(numWeeksAhead) {
   var now = new Date();
@@ -48,9 +63,23 @@ function renderWeekAsHtml(weekArray){
   return html;
 }
 
-//Render a row of dates
+$(function() {
 var now = new Date();
 $("#calendar").append(renderWeekAround(now));
-$("#calendar").append(renderFutureWeek(1));
-$("#calendar").append(renderFutureWeek(3));
-$("#calendar").append(renderFutureWeek(5));
+renderMoreWeeks(4);
+});
+
+
+function renderMoreWeeks(numWeeks) {
+  for(var i = 0; i < numWeeks; i++) {
+    $("#calendar").append(renderFutureWeek(WEEK_OFFSET));
+    WEEK_OFFSET++;
+  }
+}
+
+$(window).scroll(throttle(function(){
+  //Only render while as we approach the bottom
+  if($(document).height() - 200 < $(document).scrollTop() + $(window).height()) {
+    renderMoreWeeks(10);
+  }
+}, 500 ));	
