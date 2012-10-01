@@ -1,5 +1,4 @@
 # infinical 
-## Not your mama's datepicker/calendar UI thing ##
 
 This project aims to answer the question:
 
