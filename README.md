@@ -1,4 +1,5 @@
-# infinical # ## Not your mama's datepicker/calendar UI thing ##
+# infinical 
+## Not your mama's datepicker/calendar UI thing ##
 
 This project aims to answer the question:
 
@@ -13,6 +14,4 @@ month until the end of the week (Sat or Sun).
 However, to actually see the next month you have to actually page to the next
 month.  Why can't we just scroll down? Why can't calendars behave like normal
 documents and just continue to scroll? Why does my mother hate me?
-
-Hipmunk's iOS app actually features this, but I had this idea long ago, I swear.
 
