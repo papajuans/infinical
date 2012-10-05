@@ -14,7 +14,7 @@ var MONTHS = ["JAN","FEB", "MAR", "APR",
               "MAY", "JUN", "JUL", "AUG", 
               "SEPT", "OCT", "NOV", "DEC"];
 
-var BG_COLOR = ["#ccc", "#fff"];
+var MONTH_CLASS = ["month", "other-month"]
 
 //Times in millis
 var ONE_DAY= 86400000;
@@ -56,11 +56,26 @@ function generateWeekAsHtmlRow(weekArray){
   var html = "<tr>";
   for(var i = 0; i < 7; i++) {
     var date = weekArray[i];
-    html += "<td style=\"background-color:" + BG_COLOR[date.getMonth() % 2] + "\">";
+    var css_class = determineStyle(date)
+    html += "<td class=\"" + css_class + "\">";
     html += MONTHS[date.getMonth()] + " " + date.getDate();
     html += "</td>";
   }
   return html;
+}
+
+function determineStyle(aDate) {
+  var someMonth = aDate.getMonth();
+  var someDayOfWeek = aDate.getDay();
+  var someDate = aDate.getDate();
+
+  var now = new Date();
+  
+  if(someMonth == now.getMonth() && someDayOfWeek == now.getDay() && someDate == now.getDate()) {
+    return "today";
+  }
+
+  return MONTH_CLASS[aDate.getMonth() % 2];
 }
 
 function renderMoreWeeks(numWeeks) {

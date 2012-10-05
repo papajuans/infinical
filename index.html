@@ -5,6 +5,11 @@
     <style type="text/css">
       #calendar { width: 100%; /*border: 1px solid #ccc;*/}
       #calendar th,td{ font-family: sans-serif; width: 14%; height: 40px; text-align: center; border: 1px solid #ccc;}
+      #loader { margin-left: auto; margin-right: auto; display: block; margin-top: 2em;
+        margin-bottom: 2em; }
+      .month { background: #ccc; }
+      .other-month { background: #fff; }
+      .today { background: #FEF1B5; }
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   </head>
@@ -26,6 +31,7 @@
        </table>
       </div>
     </div>
+    <img id="loader" src="ajax-loader.gif"/>
     <script type="text/javascript" src="infinical.js"></script>
   </body>
 </html>
