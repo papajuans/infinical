@@ -3,13 +3,12 @@
   <head>
     <title>infinical</title>
     <style type="text/css">
-      #container { width: 940px; margin-left: auto; margin-right: auto; }
-      #calendar { width: 100%; border-spacing: 1px;/*border: 1px solid #ccc;*/}
-      #calendar th,td{ font-family: Arial, "sans-serif"; width: 14%; height:40px; vertical-align:
-        top;padding:3px;}
-      #calendar th { vertical-align: bottom; text-align:left;}
       #loader { margin-left: auto; margin-right: auto; display: block; margin-top: 2em;
         margin-bottom: 2em; }
+      #calendar { list-style: none; }
+      #calendar { overflow: auto; width: 100%;}
+      #calendar li { width: 100px; height: 40px; border:1px solid #ccc; float: left; font-family:
+        Arial, "sans-serif"; padding:3px;}
       .month { background: #e0e0ef;}
       .other-month { background: #eee; }
       .today { background: #FEF1B5; }
@@ -20,21 +19,10 @@
     <div id="container">
       <h1>infinical</h1>
       <p>The calendar will automatically append weeks as you scroll. See <a href="http://github.com/papajuans/infinical">github</a>.</p>
-      <div>
-        <table id="calendar">
-          <tr>
-            <th>Sunday</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-          </tr>
-       </table>
-      </div>
+      <ul id="calendar">
+      </ul>
+      <img id="loader" src="ajax-loader.gif"/>
     </div>
-    <img id="loader" src="ajax-loader.gif"/>
     <script type="text/javascript" src="infinical.js"></script>
   </body>
 </html>

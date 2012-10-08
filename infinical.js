@@ -53,13 +53,13 @@ function calculateDay(someDate, offsetInDays) {
 }
 
 function generateWeekAsHtmlRow(weekArray){
-  var html = "<tr>";
+  var html = "";
   for(var i = 0; i < 7; i++) {
     var date = weekArray[i];
     var css_class = determineStyle(date)
-    html += "<td class=\"" + css_class + "\">";
+    html += "<li class=\"" + css_class + "\">";
     html += dateFormatter(date);
-    html += "</td>";
+    html += "</li>";
   }
   return html;
 }
@@ -102,16 +102,24 @@ function renderMoreWeeks(numWeeks) {
   }
 }
 
+function calcInitialRender() {
+  var rowSize = window.innerWidth / 100;
+  var numRows = window.innerHeight / 40;
+
+  var numDays = rowSize * numRows;
+  return numDays / 7;
+}
+
 $(function() {
   //Begin by rendering as many cells to fill the current viewport
-  NUM_WEEKS_TO_RENDER = window.innerHeight / 40;
+  NUM_WEEKS_TO_RENDER = calcInitialRender();
   console.log("Rendering " + NUM_WEEKS_TO_RENDER + " weeks.");
   renderMoreWeeks(NUM_WEEKS_TO_RENDER);
 });
 
 $(window).scroll(throttle(function(){
   //Only render while as we approach the bottom
-  if($(document).height() - 60 < $(document).scrollTop() + $(window).height()) {
+  if($(document).height() - 40 < $(document).scrollTop() + $(window).height()) {
     console.log("appending from 10 weeks from " + WEEK_OFFSET);
     renderMoreWeeks(NUM_WEEKS_TO_RENDER);
   }
