@@ -3,19 +3,22 @@
   <head>
     <title>infinical</title>
     <style type="text/css">
-      #calendar { width: 100%; /*border: 1px solid #ccc;*/}
-      #calendar th,td{ font-family: sans-serif; width: 14%; height: 40px; text-align: center; border: 1px solid #ccc;}
+      #container { width: 940px; margin-left: auto; margin-right: auto; }
+      #calendar { width: 100%; border-spacing: 1px;/*border: 1px solid #ccc;*/}
+      #calendar th,td{ font-family: sans-serif; width: 14%; height:40px; vertical-align:
+        top;padding:3px;}
+      #calendar th { vertical-align: bottom; text-align:left;}
       #loader { margin-left: auto; margin-right: auto; display: block; margin-top: 2em;
         margin-bottom: 2em; }
-      .month { background: #ccc; }
-      .other-month { background: #fff; }
+      .month { background: #e0e0ef;}
+      .other-month { background: #eee; }
       .today { background: #FEF1B5; }
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   </head>
   <body>
-    <h1>infinical</h1>
     <div id="container">
+      <h1>infinical</h1>
       <p>The calendar will automatically append weeks as you scroll. See <a href="http://github.com/papajuans/infinical">github</a>.</p>
       <div>
         <table id="calendar">

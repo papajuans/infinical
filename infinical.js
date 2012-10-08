@@ -10,9 +10,9 @@ function throttle(fn, delay) {
   };
 }
 
-var MONTHS = ["JAN","FEB", "MAR", "APR", 
-              "MAY", "JUN", "JUL", "AUG", 
-              "SEPT", "OCT", "NOV", "DEC"];
+var MONTHS = ["January","February", "March", "April", 
+              "May", "June", "July", "August", 
+              "September", "October", "November", "December"];
 
 var MONTH_CLASS = ["month", "other-month"]
 
@@ -21,7 +21,7 @@ var ONE_DAY= 86400000;
 var ONE_WEEK = ONE_DAY * 7;
 
 //Global state to know how many weeks we've rendered already
-var WEEK_OFFSET = 0;
+var WEEK_OFFSET = -2;
 
 //How many weeks to render during each infinite scroll action
 var NUM_WEEKS_TO_RENDER;
@@ -58,7 +58,7 @@ function generateWeekAsHtmlRow(weekArray){
     var date = weekArray[i];
     var css_class = determineStyle(date)
     html += "<td class=\"" + css_class + "\">";
-    html += MONTHS[date.getMonth()] + " " + date.getDate();
+    html += dateFormatter(date);
     html += "</td>";
   }
   return html;
@@ -76,6 +76,23 @@ function determineStyle(aDate) {
   }
 
   return MONTH_CLASS[aDate.getMonth() % 2];
+}
+
+function dateFormatter(date) {
+  var formattedDate = "";
+  
+  if(date.getDate() == 1) {
+    formattedDate += MONTHS[date.getMonth()] + " ";
+  }
+  
+  formattedDate += date.getDate();
+
+  if(date.getDate() == 1 && date.getMonth() == 0) {
+    formattedDate += ", ";
+    formattedDate += date.getFullYear();
+  }
+
+  return formattedDate;
 }
 
 function renderMoreWeeks(numWeeks) {
