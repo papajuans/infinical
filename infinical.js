@@ -109,8 +109,8 @@ function renderMoreWeeks(numWeeks) {
       console.log($(this).html());
       var i = 1;
       var currentRow = $(this).nextAll().each(function() { 
-        var relativeSpan = $(this).find('.relative');
-        relativeSpan.html("in " + i + " days");          
+        var relativeSpan = $(this).children('.relative');
+        relativeSpan.html("is in " + i + " days");          
         i++;
       });
       //Only render 60 days?
