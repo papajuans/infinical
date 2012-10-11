@@ -117,7 +117,7 @@ $(function() {
         relativeSpan.html(i + " days away");
         i++;
       });
-      $(this).parent('tr').nextAll().each(function() {
+      $(this).parent('tr').nextAll().slice(0,NUM_WEEKS_TO_RENDER).each(function() {
         $(this).children('td').each(function() {
           var relativeSpan = $(this).children('.relative');
           var week = i/7;
