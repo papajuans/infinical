@@ -59,6 +59,7 @@ function generateWeekAsHtmlRow(weekArray){
     var css_class = determineStyle(date)
     html += "<td class=\"" + css_class + "\">";
     html += dateFormatter(date);
+    html += "<span class=\"full-date\">" + fullDate(date) + "</span>";
     html += "</td>";
   }
   return html;
@@ -95,6 +96,11 @@ function dateFormatter(date) {
   return formattedDate;
 }
 
+function fullDate(date) {
+  var formatted = MONTHS[date.getMonth()] + ", " + date.getFullYear();
+  return formatted;
+}
+
 function renderMoreWeeks(numWeeks) {
   for(var i = 0; i < numWeeks; i++) {
     $("#calendar").append(renderFutureWeek(WEEK_OFFSET));
@@ -107,6 +113,17 @@ $(function() {
   NUM_WEEKS_TO_RENDER = window.innerHeight / 40;
   console.log("Rendering " + NUM_WEEKS_TO_RENDER + " weeks.");
   renderMoreWeeks(NUM_WEEKS_TO_RENDER);
+
+  $("#calendar").delegate("td",  { 
+    "mouseenter": function() {
+      $(this).children(".full-date").css("display","block");
+    },
+    "mouseleave": function() {
+      $(this).children(".full-date").css("display","none");
+    }
+
+  });
+
 });
 
 $(window).scroll(throttle(function(){
