@@ -106,17 +106,24 @@ function renderMoreWeeks(numWeeks) {
   //Attach hover handlers for calculating relative dates
   $("td").hover(
     function() {
-      console.log($(this).html());
       var i = 1;
       var currentRow = $(this).nextAll().each(function() { 
         var relativeSpan = $(this).children('.relative');
-        relativeSpan.html("is in " + i + " days");          
+        relativeSpan.html(i + " days away");
         i++;
       });
-      //Only render 60 days?
-      //for(var i; i < 60; i++) {
-       // currentRow[i].html(i + " day away");
-      //}
+      $(this).parent('tr').nextAll().each(function() {
+        $(this).children('td').each(function() {
+          var relativeSpan = $(this).children('.relative');
+          var week = i/7;
+          if(i%7==0) {
+            relativeSpan.html(week + " weeks away");
+          } else {
+            relativeSpan.html(i + " days away");
+          }
+          i++;
+        });
+      });
     },
     function() {
       //Reset
