@@ -11,8 +11,8 @@ function throttle(fn, delay) {
 }
 
 var MONTHS = ["January","February", "March", "April", 
-              "May", "June", "July", "August", 
-              "September", "October", "November", "December"];
+    "May", "June", "July", "August", 
+    "September", "October", "November", "December"];
 
 var MONTH_CLASS = ["month", "other-month"]
 
@@ -57,8 +57,9 @@ function generateWeekAsHtmlRow(weekArray){
   for(var i = 0; i < 7; i++) {
     var date = weekArray[i];
     var css_class = determineStyle(date)
-    html += "<td class=\"" + css_class + "\">";
+      html += "<td class=\"" + css_class + "\">";
     html += dateFormatter(date);
+    html += "<span class=\"relative\"></span>";
     html += "</td>";
   }
   return html;
@@ -70,7 +71,7 @@ function determineStyle(aDate) {
   var someDate = aDate.getDate();
 
   var now = new Date();
-  
+
   if(someMonth == now.getMonth() && someDayOfWeek == now.getDay() && someDate == now.getDate()) {
     return "today";
   }
@@ -80,11 +81,11 @@ function determineStyle(aDate) {
 
 function dateFormatter(date) {
   var formattedDate = "";
-  
+
   if(date.getDate() == 1) {
     formattedDate += MONTHS[date.getMonth()] + " ";
   }
-  
+
   formattedDate += date.getDate();
 
   if(date.getDate() == 1 && date.getMonth() == 0) {
@@ -100,6 +101,28 @@ function renderMoreWeeks(numWeeks) {
     $("#calendar").append(renderFutureWeek(WEEK_OFFSET));
     WEEK_OFFSET++;
   }
+  $("td").unbind('mouseenter mouseleave');
+
+  //Attach hover handlers for calculating relative dates
+  $("td").hover(
+    function() {
+      console.log($(this).html());
+      var i = 1;
+      var currentRow = $(this).nextAll().each(function() { 
+        var relativeSpan = $(this).find('.relative');
+        relativeSpan.html("in " + i + " days");          
+        i++;
+      });
+      //Only render 60 days?
+      //for(var i; i < 60; i++) {
+       // currentRow[i].html(i + " day away");
+      //}
+    },
+    function() {
+      //Reset
+      $('.relative').html('');
+    }
+  );
 }
 
 $(function() {
@@ -107,12 +130,14 @@ $(function() {
   NUM_WEEKS_TO_RENDER = window.innerHeight / 40;
   console.log("Rendering " + NUM_WEEKS_TO_RENDER + " weeks.");
   renderMoreWeeks(NUM_WEEKS_TO_RENDER);
+
+  //Infinite scroll
+/*  $(window).scroll(throttle(function(){
+    //Only render while as we approach the bottom
+    if($(document).height() - 60 < $(document).scrollTop() + $(window).height()) {
+      console.log("appending from 10 weeks from " + WEEK_OFFSET);
+      renderMoreWeeks(NUM_WEEKS_TO_RENDER);
+    }
+  }, 500 ));*/
 });
 
-$(window).scroll(throttle(function(){
-  //Only render while as we approach the bottom
-  if($(document).height() - 60 < $(document).scrollTop() + $(window).height()) {
-    console.log("appending from 10 weeks from " + WEEK_OFFSET);
-    renderMoreWeeks(NUM_WEEKS_TO_RENDER);
-  }
-}, 500 ));	
