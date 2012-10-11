@@ -60,6 +60,7 @@ function generateWeekAsHtmlRow(weekArray){
       html += "<td class=\"" + css_class + "\">";
     html += dateFormatter(date);
     html += "<span class=\"relative\"></span>";
+    html += "<span class=\"full-date\">" + fullDate(date) + "</span>";
     html += "</td>";
   }
   return html;
@@ -94,6 +95,11 @@ function dateFormatter(date) {
   }
 
   return formattedDate;
+}
+
+function fullDate(date) {
+  var formatted = MONTHS[date.getMonth()] + ", " + date.getFullYear();
+  return formatted;
 }
 
 function renderMoreWeeks(numWeeks) {
@@ -141,5 +147,16 @@ $(function() {
       renderMoreWeeks(NUM_WEEKS_TO_RENDER);
     }
   }, 500 ));
+
+  $("#calendar").delegate("td",  { 
+    "mouseenter": function() {
+      $(this).children(".full-date").css("display","block");
+    },
+    "mouseleave": function() {
+      $(this).children(".full-date").css("display","none");
+    }
+
+  });
+
 });
 
