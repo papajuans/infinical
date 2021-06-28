@@ -2,7 +2,7 @@
 
 This project aims to answer the question:
 
-> Why are calendars paged? Why can't we just scroll through like a normal
+> Why are calendars paginated? Why can't we just scroll through like a normal
 > document?
 
 Most datepickers and calendar representations are paged by month. Since months
